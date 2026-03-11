@@ -1,0 +1,137 @@
+# 1. Fetch all cases with their hearings and verdicts
+query GetAllCases {
+  getCases {
+    id
+    caseNumber
+    type
+    status
+    filedDate
+  }
+}
+
+# 2. Get a single case by ID
+query GetCaseById {
+  getCaseById(caseId: 1) {
+    id
+    caseNumber
+    status
+    filedDate
+  }
+}
+
+# 3. Get all Judges and their assigned court rooms
+query GetAllJudges {
+  getJudges {
+    id
+    name
+    courtRoom
+  }
+}
+
+# 4. Get all Lawyers and their Bar IDs
+query GetAllLawyers {
+  getLawyers {
+    id
+    name
+    barId
+  }
+}
+
+# 5. Fetch all Hearings related to a specific case
+query GetHearingsByCase {
+  getHearingsByCase(caseId: 1) {
+    id
+    hearingDate
+    status
+    judgeId
+  }
+}
+
+# 6. Fetch all Verdicts for a specific case
+query GetVerdictsByCase {
+  getVerdictsByCase(caseId: 3) {
+    id
+    decision
+    decisionDate
+  }
+}
+
+# 7. Create a new Case
+mutation CreateCase {
+  createCase(input: { caseNumber: "CASE-2023-004", type: "Family", status: FILED }) {
+    success
+    message
+    case {
+      id
+      caseNumber
+      status
+    }
+  }
+}
+
+# 8. Update a Case Status
+mutation UpdateCaseStatus {
+  updateCaseStatus(caseId: 1, newStatus: ONGOING) {
+    success
+    message
+    case {
+      id
+      status
+    }
+  }
+}
+
+#9.Create a new Judge
+mutation CreateJudge {
+  createJudge(
+    input: {
+      name: "Justice Sharma"
+      courtRoom: "A101"
+    }
+  ) {
+    success
+    message
+    judge {
+      id
+      name
+      courtRoom
+    }
+  }
+}
+
+#10. Create a new Lawyer
+mutation CreateLawyer {
+  createLawyer(
+    input: {
+      name: "Advocate Mehta"
+      barId: "BAR12345"
+    }
+  ) {
+    success
+    message
+    lawyer {
+      id
+      name
+      barId
+    }
+  }
+}
+
+#11. Get all scheduled hearings
+query GetScheduledHearings {
+  getScheduledHearings {
+    id
+    caseId
+    judgeId
+    hearingDate
+    status
+  }
+}
+
+#12. Delete a Hearing
+mutation DeleteHearing {
+  deleteHearing(hearingId: 2) {
+    success
+    message
+  }
+}
